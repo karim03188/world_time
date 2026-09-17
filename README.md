@@ -35,16 +35,6 @@ A small, transparent, modern desktop widget for Windows that shows live time for
 
 > 💡 The widget does not appear in the taskbar — this is intentional; it behaves as a desktop widget.
 
-### 📌 Prefer a stable download link?
-
-After publishing a GitHub Release, point the link to a permanent asset URL:
-
-```text
-https://github.com/<YOUR-USERNAME>/<YOUR-REPO>/releases/latest/download/world_time_windows_x64.zip
-```
-
-This always redirects to the latest version.
-
 ---
 
 ## 🚀 Getting Started
