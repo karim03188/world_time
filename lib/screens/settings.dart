@@ -199,16 +199,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       style: const TextStyle(color: Colors.white, fontSize: 14),
-                      items: [
-                        for (final id in _cityIds)
-                          DropdownMenuItem(
-                            value: id,
-                            child: Text(
-                              '${cityByTzId(id).flag}  ${cityByTzId(id).name}',
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                      items: _cityIds.map((id) {
+                        final c = cityByTzId(id);
+                        return DropdownMenuItem(
+                          value: id,
+                          child: Text(
+                            '${c.flag}  ${c.name}, ${c.country}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                      ],
+                        );
+                      }).toList(),
                       onChanged: (value) {
                         if (value != null) setState(() => _compareId = value);
                       },
@@ -308,43 +309,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
   List<Widget> _cityRows() {
     return [
       for (var i = 0; i < _cityIds.length; i++)
-        Padding(
-          padding: const EdgeInsets.only(bottom: 6),
-          child: Row(
-            children: [
-              Text(cityByTzId(_cityIds[i]).flag, style: const TextStyle(fontSize: 18)),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  cityByTzId(_cityIds[i]).name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14, color: Colors.white),
-                ),
+        Builder(
+          builder: (context) {
+            final city = cityByTzId(_cityIds[i]);
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 6),
+              child: Row(
+                children: [
+                  Text(city.flag, style: const TextStyle(fontSize: 18)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      city.country.isEmpty
+                          ? city.name
+                          : '${city.name}, ${city.country}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 13.5, color: Colors.white),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: i == 0 ? null : () => _moveCity(i, -1),
+                    icon: const Icon(Icons.keyboard_arrow_up),
+                    color: Colors.white54,
+                    visualDensity: VisualDensity.compact,
+                    tooltip: 'Move up',
+                  ),
+                  IconButton(
+                    onPressed: i == _cityIds.length - 1
+                        ? null
+                        : () => _moveCity(i, 1),
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    color: Colors.white54,
+                    visualDensity: VisualDensity.compact,
+                    tooltip: 'Move down',
+                  ),
+                  IconButton(
+                    onPressed: () => _removeCity(i),
+                    icon: const Icon(Icons.delete_outline, size: 19),
+                    color: Colors.redAccent,
+                    visualDensity: VisualDensity.compact,
+                    tooltip: 'Remove',
+                  ),
+                ],
               ),
-              IconButton(
-                onPressed: i == 0 ? null : () => _moveCity(i, -1),
-                icon: const Icon(Icons.keyboard_arrow_up),
-                color: Colors.white54,
-                visualDensity: VisualDensity.compact,
-                tooltip: 'Move up',
-              ),
-              IconButton(
-                onPressed: i == _cityIds.length - 1 ? null : () => _moveCity(i, 1),
-                icon: const Icon(Icons.keyboard_arrow_down),
-                color: Colors.white54,
-                visualDensity: VisualDensity.compact,
-                tooltip: 'Move down',
-              ),
-              IconButton(
-                onPressed: () => _removeCity(i),
-                icon: const Icon(Icons.delete_outline, size: 19),
-                color: Colors.redAccent,
-                visualDensity: VisualDensity.compact,
-                tooltip: 'Remove',
-              ),
-            ],
-          ),
+            );
+          },
         ),
     ];
   }
