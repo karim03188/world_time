@@ -46,12 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return DragToResizeArea(
       child: Container(
-        margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Color.fromARGB(s.bgAlpha, 18, 18, 22),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Colors.white12),
-        ),
+        margin: const EdgeInsets.all(6),
+        color: Colors.transparent,
         child: DragToMoveArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 14),
@@ -72,6 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0.3,
+                        shadows: [
+                          Shadow(color: Colors.black87, blurRadius: 5),
+                        ],
                       ),
                     ),
                     const Spacer(),
@@ -126,8 +125,6 @@ class _CityList extends StatelessWidget {
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(city.flag, style: TextStyle(fontSize: 26 * scale)),
-            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,6 +139,9 @@ class _CityList extends StatelessWidget {
                       fontSize: 13.5 * scale,
                       fontWeight: FontWeight.w600,
                       color: isRef ? const Color(0xFF8FE3A8) : Colors.white,
+                      shadows: const [
+                        Shadow(color: Colors.black87, blurRadius: 5),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 3),
@@ -149,7 +149,12 @@ class _CityList extends StatelessWidget {
                     status,
                     style: TextStyle(
                       fontSize: 11.5 * scale,
-                      color: isRef ? const Color(0xFF8FE3A8).withValues(alpha: 0.8) : Colors.white54,
+                      color: isRef
+                          ? const Color(0xFF8FE3A8).withValues(alpha: 0.85)
+                          : Colors.white70,
+                      shadows: const [
+                        Shadow(color: Colors.black87, blurRadius: 4),
+                      ],
                     ),
                   ),
                 ],
@@ -166,14 +171,21 @@ class _CityList extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                     fontFeatures: const [FontFeature.tabularFigures()],
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 5),
+                      Shadow(color: Colors.black45, offset: Offset(0, 1)),
+                    ],
                   ),
                 ),
                 Text(
                   '${now.second.toString().padLeft(2, '0')}s',
                   style: TextStyle(
                     fontSize: 10.5 * scale,
-                    color: Colors.white38,
+                    color: Colors.white60,
                     fontFeatures: const [FontFeature.tabularFigures()],
+                    shadows: const [
+                      Shadow(color: Colors.black87, blurRadius: 4),
+                    ],
                   ),
                 ),
               ],

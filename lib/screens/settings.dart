@@ -121,8 +121,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final s = widget.settings;
-
     return DragToResizeArea(
       child: Container(
         margin: const EdgeInsets.all(10),
@@ -204,7 +202,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         return DropdownMenuItem(
                           value: id,
                           child: Text(
-                            '${c.flag}  ${c.name}, ${c.country}',
+                            '${c.name}, ${c.country}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -239,23 +237,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    _sectionTitle('Transparency'),
-                    Slider(
-                      value: _transparency.clamp(0.2, 0.95).toDouble(),
-                      min: 0.2,
-                      max: 0.95,
-                      activeColor: const Color(0xFF8FE3A8),
-                      label: '${(_transparency * 100).round()}%',
-                      onChanged: (value) {
-                        setState(() => _transparency = value);
-                        s.transparency = value;
-                      },
-                    ),
-                    Text(
-                      '${(_transparency * 100).round()}% opacity',
-                      style: const TextStyle(color: Colors.white54, fontSize: 12),
-                    ),
-                    const SizedBox(height: 10),
+                    _sectionTitle('Options'),
+                    const SizedBox(height: 6),
                     CheckboxListTile(
                       value: _alwaysOnDesktop,
                       onChanged: (v) => _toggleAlwaysOnDesktop(v ?? false),
@@ -316,7 +299,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: const EdgeInsets.only(bottom: 6),
               child: Row(
                 children: [
-                  Text(city.flag, style: const TextStyle(fontSize: 18)),
+                  const Icon(Icons.public, size: 17, color: Colors.white38),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -431,7 +414,7 @@ class _AddCitySheetState extends State<_AddCitySheet> {
                           final c = visible[i];
                           return ListTile(
                             dense: true,
-                            leading: Text(c.flag, style: const TextStyle(fontSize: 20)),
+                            leading: const Icon(Icons.public, size: 18, color: Colors.white38),
                             title: Text(
                               c.name,
                               style: const TextStyle(fontSize: 14, color: Colors.white),
