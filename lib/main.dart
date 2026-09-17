@@ -39,7 +39,7 @@ Future<void> _initWindow() async {
     backgroundColor: Colors.transparent,
     titleBarStyle: TitleBarStyle.hidden,
     windowButtonVisibility: false,
-    skipTaskbar: false,
+    skipTaskbar: true,
     title: 'World Clock',
   );
   await windowManager.waitUntilReadyToShow(options, () async {
