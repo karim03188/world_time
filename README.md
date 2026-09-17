@@ -27,13 +27,23 @@ A small, transparent, modern desktop widget for Windows that shows live time for
 
 1. Download the archive:
 
-   ⬇️ **`world_time_windows_x64.zip`** (inside the `release/` folder of this repository)
+   ⬇️ **[Download `world_time_windows_x64.zip`](/world_time_windows_x64.zip)** (or use the files inside the [`release/`](/release) folder)
 
 2. Extract the archive.
 3. Run `world_time.exe` from the extracted folder.
 4. Optional: enable **Start with Windows** in Settings to launch automatically on sign-in.
 
 > 💡 The widget does not appear in the taskbar — this is intentional; it behaves as a desktop widget.
+
+### 📌 Prefer a stable download link?
+
+After publishing a GitHub Release, point the link to a permanent asset URL:
+
+```text
+https://github.com/<YOUR-USERNAME>/<YOUR-REPO>/releases/latest/download/world_time_windows_x64.zip
+```
+
+This always redirects to the latest version.
 
 ---
 
