@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:world_time/data/world_cities.dart';
 
 class AppSettings {
+  /// Each entry is a [WorldCity.key] (not a raw IANA time zone id — several
+  /// cities can share one time zone, so the key also encodes the city name).
   List<String> cityIds;
   String compareCityId;
   double transparency;
@@ -63,19 +66,32 @@ class SettingsStorage {
   static const _kWindowW = 'windowW';
   static const _kWindowH = 'windowH';
 
-  static const defaultCities = <String>[
-    'Asia/Kabul',
-    'America/Toronto',
-    'America/Vancouver',
-    'Europe/London',
+  static final defaultCities = <String>[
+    cityByTzId('Asia/Kabul').key,
+    cityByTzId('America/Toronto').key,
+    cityByTzId('America/Vancouver').key,
+    cityByTzId('Europe/London').key,
   ];
+
+  /// Converts a saved city entry to the current [WorldCity.key] format.
+  /// Settings saved before city keys existed stored a raw IANA time zone id
+  /// (no '|'); map those to that zone's first catalog entry so upgrading
+  /// users don't lose their saved cities.
+  static String _migrateCityEntry(String saved) {
+    if (saved.contains('|')) return saved;
+    return cityByTzId(saved).key;
+  }
 
   static Future<AppSettings> load() async {
     final p = await SharedPreferences.getInstance();
-    final cities = p.getStringList(_kCities) ?? defaultCities;
-    var compare = p.getString(_kCompare) ?? 'Asia/Kabul';
-    if (!cities.contains(compare)) {
-      compare = cities.isNotEmpty ? cities.first : 'Asia/Kabul';
+    final savedCities = p.getStringList(_kCities);
+    final cities = savedCities == null
+        ? defaultCities
+        : savedCities.map(_migrateCityEntry).toList();
+    var compare = p.getString(_kCompare);
+    compare = compare == null ? null : _migrateCityEntry(compare);
+    if (compare == null || !cities.contains(compare)) {
+      compare = cities.isNotEmpty ? cities.first : '';
     }
     return AppSettings(
       cityIds: cities,

@@ -74,6 +74,7 @@ class _WorldClockAppState extends State<WorldClockApp> {
   void initState() {
     super.initState();
     windowManager.addListener(_listener);
+    windowManager.setPreventClose(true);
   }
 
   @override
@@ -130,5 +131,20 @@ class _PersistenceListener with WindowListener {
       ..windowW = size.width
       ..windowH = size.height;
     await SettingsStorage.save(appSettings);
+  }
+
+  // Flush the latest position/size on a graceful close (X button, Alt+F4)
+  // in case the last onWindowMoved/onWindowResized save hadn't finished yet.
+  @override
+  void onWindowClose() async {
+    final pos = await windowManager.getPosition();
+    final size = await windowManager.getSize();
+    appSettings
+      ..windowX = pos.dx
+      ..windowY = pos.dy
+      ..windowW = size.width
+      ..windowH = size.height;
+    await SettingsStorage.save(appSettings);
+    await windowManager.destroy();
   }
 }

@@ -46,3 +46,13 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Old Windows release build output committed by mistake in the past — do
+# not re-add; rebuild with `flutter build windows --release`.
+/release/
+/world_time.exe
+/world_time_windows_x64.zip
+
+# Note: installer/Output/*.exe (the Inno Setup installer) IS intentionally
+# tracked for direct download from the repo — do not ignore it here.
+

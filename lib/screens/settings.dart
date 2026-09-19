@@ -38,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _sizePreset = 'S';
     }
     if (!_cityIds.contains(_compareId)) {
-      _compareId = _cityIds.isNotEmpty ? _cityIds.first : 'Asia/Kabul';
+      _compareId = _cityIds.isNotEmpty ? _cityIds.first : '';
     }
     _alwaysOnDesktop = widget.settings.alwaysOnDesktop;
     _startWithWindows = widget.settings.startWithWindows;
@@ -57,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       final removed = _cityIds.removeAt(index);
       if (_compareId == removed) {
-        _compareId = _cityIds.isNotEmpty ? _cityIds.first : 'Asia/Kabul';
+        _compareId = _cityIds.isNotEmpty ? _cityIds.first : '';
       }
     });
   }
@@ -70,12 +70,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
       ),
       isScrollControlled: true,
-      builder: (_) => _AddCitySheet(addedIds: _cityIds),
+      builder: (_) => _AddCitySheet(addedKeys: _cityIds),
     );
     if (selected != null && mounted) {
       setState(() {
-        _cityIds.add(selected.id);
-        if (_compareId.isEmpty) _compareId = selected.id;
+        _cityIds.add(selected.key);
+        if (_compareId.isEmpty) _compareId = selected.key;
       });
     }
   }
@@ -197,10 +197,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       style: const TextStyle(color: Colors.white, fontSize: 14),
-                      items: _cityIds.map((id) {
-                        final c = cityByTzId(id);
+                      items: _cityIds.map((key) {
+                        final c = cityByKey(key);
                         return DropdownMenuItem(
-                          value: id,
+                          value: key,
                           child: Text(
                             '${c.name}, ${c.country}',
                             maxLines: 1,
@@ -294,7 +294,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       for (var i = 0; i < _cityIds.length; i++)
         Builder(
           builder: (context) {
-            final city = cityByTzId(_cityIds[i]);
+            final city = cityByKey(_cityIds[i]);
             return Padding(
               padding: const EdgeInsets.only(bottom: 6),
               child: Row(
@@ -344,9 +344,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 }
 
 class _AddCitySheet extends StatefulWidget {
-  final List<String> addedIds;
+  final List<String> addedKeys;
 
-  const _AddCitySheet({required this.addedIds});
+  const _AddCitySheet({required this.addedKeys});
 
   @override
   State<_AddCitySheet> createState() => _AddCitySheetState();
@@ -362,7 +362,7 @@ class _AddCitySheetState extends State<_AddCitySheet> {
         ? worldCities
         : worldCities.where((c) => c.searchKey.contains(q)).toList();
     final visible = results
-        .where((c) => !widget.addedIds.contains(c.id))
+        .where((c) => !widget.addedKeys.contains(c.key))
         .take(200)
         .toList();
 

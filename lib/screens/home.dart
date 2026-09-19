@@ -105,18 +105,19 @@ class _CityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final compareOffset = ClockService.offset(settings.compareCityId);
+    final compareOffset =
+        ClockService.offset(cityByKey(settings.compareCityId).id);
 
     return ListView.separated(
       padding: EdgeInsets.zero,
       itemCount: settings.cityIds.length,
       separatorBuilder: (_, _) => const Divider(height: 20, color: Colors.white10),
       itemBuilder: (context, index) {
-        final id = settings.cityIds[index];
-        final city = cityByTzId(id);
-        final now = ClockService.now(id);
-        final isRef = id == settings.compareCityId;
-        final diff = ClockService.offset(id) - compareOffset;
+        final key = settings.cityIds[index];
+        final city = cityByKey(key);
+        final now = ClockService.now(city.id);
+        final isRef = key == settings.compareCityId;
+        final diff = ClockService.offset(city.id) - compareOffset;
 
         final status = isRef
             ? 'Reference'

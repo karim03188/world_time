@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "world_time" "\0"
+            VALUE "CompanyName", "Karim Farhang" "\0"
+            VALUE "FileDescription", "World Clock" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "world_time" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.example. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Karim Farhang. All rights reserved." "\0"
             VALUE "OriginalFilename", "world_time.exe" "\0"
-            VALUE "ProductName", "world_time" "\0"
+            VALUE "ProductName", "World Clock" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

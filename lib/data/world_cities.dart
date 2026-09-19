@@ -255,6 +255,20 @@ const List<WorldCity> worldCities = [
   WorldCity(id: 'Etc/UTC', name: 'UTC', country: 'Coordinated Universal Time', flag: '🌐'),
 ];
 
+/// Looks up a city by its unique [WorldCity.key] (not its time zone id,
+/// which multiple cities can share). Falls back to a synthetic city if the
+/// key is unknown (e.g. it was removed from the catalog after being saved).
+WorldCity cityByKey(String key) {
+  for (final c in worldCities) {
+    if (c.key == key) return c;
+  }
+  final tzId = key.split('|').first;
+  return WorldCity(id: tzId, name: tzId, country: '', flag: '🌐');
+}
+
+/// Returns the first catalog entry for the given IANA time zone id. Used
+/// only to pick a representative city for defaults/migration, where several
+/// cities may share the same zone.
 WorldCity cityByTzId(String tzId) {
   for (final c in worldCities) {
     if (c.id == tzId) return c;
