@@ -25,18 +25,20 @@ A small, transparent, modern desktop widget for Windows that shows live time for
 
 **Requirements:** Windows 10 or 11 (64-bit)
 
-⬇️ **[Download WorldClock-Setup-1.0.0.exe](installer/Output/WorldClock-Setup-1.0.0.exe)**
+⬇️ **[Download WorldClock-Setup-1.0.1.exe](installer/Output/WorldClock-Setup-1.0.1.exe)**
 
 This installer puts the app in a fixed folder, adds a Start Menu entry, and
 registers a proper uninstaller in "Add or Remove Programs" — which is what
 keeps **Start with Windows** reliable across reboots (a portable exe moved
 around later would break that setting).
 
-1. Run `WorldClock-Setup-1.0.0.exe`.
-2. Optionally check **Start World Clock automatically when Windows starts**
-   during install (or enable it later from in-app Settings).
-3. Done — the app launches, and Windows will remember it after every
-   restart.
+1. Run `WorldClock-Setup-1.0.1.exe`. If you have an older version
+   installed, this upgrades it in place (and also removes a leftover
+   Startup-folder shortcut from versions before 1.0.1 that could cause a
+   duplicate widget to appear on reboot).
+2. Done — the app launches. Turn on **Start with Windows** from in-app
+   Settings ⚙ if you want it to launch automatically at sign-in (on by
+   default).
 
 Want to build the installer yourself from source instead? See
 [`installer/README.md`](installer/README.md) (one PowerShell command).

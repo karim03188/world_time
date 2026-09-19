@@ -9,8 +9,14 @@ This folder has everything needed to turn the app into an installable
 - A Start Menu shortcut is created, plus an optional desktop shortcut.
 - The app is registered in Windows **"Add or Remove Programs"** and removed
   cleanly by the standard uninstaller.
-- You can also enable **"Start automatically with Windows"** right from the
-  installer.
+
+> **Important:** the installer does **not** create its own Startup-folder
+> shortcut. "Start with Windows" is handled entirely by the app itself (the
+> `launch_at_startup` package, toggled from in-app Settings), which writes
+> a single registry `Run` entry. Versions before 1.0.1 also added a
+> Startup-folder shortcut, so both mechanisms fired on every boot and
+> launched two copies of the app — never add `[Icons]`/`[Tasks]` entries
+> pointing at `{userstartup}` back into `setup.iss`, or that bug returns.
 
 ## Prerequisites (one-time setup)
 
@@ -34,11 +40,11 @@ This script:
 1. Runs `flutter build windows --release` (compiles the app).
 2. Locates Inno Setup and compiles `installer\setup.iss`.
 3. Produces the final installer at
-   `installer\Output\WorldClock-Setup-1.0.0.exe`.
+   `installer\Output\WorldClock-Setup-<version>.exe`.
 
-That single `WorldClock-Setup-1.0.0.exe` file can be handed to any Windows
-PC and double-click installed — no Flutter or other tooling needed on the
-target machine.
+That single installer file can be handed to any Windows PC and
+double-click installed — no Flutter or other tooling needed on the target
+machine.
 
 ## Method 2 — manual (if you want step-by-step control)
 
